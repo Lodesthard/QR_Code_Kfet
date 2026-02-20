@@ -132,6 +132,18 @@
         }
     }
 
+    // remove the ordered products from stock
+
+    for($i = 0; $i < count($product_ids); $i++) {
+        $id = $product_ids[$i];
+        $quantity = $product_quantities[$i];
+        if(!$mysqli->query('UPDATE products SET stock = stock - '. $quantity .' WHERE id = '. $id)) {
+            // Database error
+            header('Location: ../index.php?command_status=database_error_7');
+            exit();
+        }
+    }
+
     // Redirect to home page
 
     // Check if a cacolac was purchased (id = 17)
