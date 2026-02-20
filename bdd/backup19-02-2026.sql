@@ -130,7 +130,7 @@ CREATE TABLE `products` (
   `bdlc_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `category` tinyint NOT NULL COMMENT '[0 = boisson chaude | 1 = boisson froide | 2 = snack]',
   `image` varchar(255) NOT NULL DEFAULT 'undefined.jpg',
-  'stock' int NOT NULL DEFAULT 0,
+  `stock` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -141,7 +141,46 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (19,'Sodas',0.80,0.60,1,'Sodas.jpg'),(8,'Thé',0.60,0.40,0,'Thé.jpg'),(16,'Grand Café',0.70,0.50,0,'Grand Café.jpg'),(17,'Cacolac',0.80,0.60,1,'Cacolac.jpg'),(18,'Jus de Fruits',0.70,0.50,1,'Jus de Fruits.jpg'),(20,'Viennoiserie',1.40,1.20,2,'Viennoiserie.jpg'),(21,'Maxi Viennoiserie',1.60,1.40,2,'Maxi Viennoiserie.jpg'),(22,'Cookies',1.70,1.50,2,'Cookies.jpg'),(24,'Pépito',1.70,1.50,2,'Pépito.jpg'),(25,'Sablés Bio',1.20,1.00,2,'Sablés Bio.jpg'),(80,'Thé + Viennoiserie',1.80,1.60,3,'Thé + Viennoiserie.svg'),(27,'Galette de Riz Choco',2.00,1.80,2,'Galette de Riz Choco.jpg'),(28,'Barres Céréales',0.50,0.30,2,'Barres Céréales.png'),(29,'Nouilles Instantannées',1.20,1.00,2,'Nouilles Instantannées.jpg'),(30,'Repas Bio',3.00,2.80,2,'Repas Bio.jpg'),(31,'Chips',0.50,0.30,2,'Chips.jpg'),(32,'Kit-Kat',0.80,0.60,2,'Kit-Kat.jpg'),(33,'Mars',0.80,0.60,2,'Mars.jpeg'),(34,'Lion',0.80,0.60,2,'Lion.jpg'),(94,'Petit beurre',0.40,0.20,2,'Petit_Beurre_Choco.jpg'),(36,'Kinder Bueno/White',1.00,0.80,2,'Kinder Bueno.jpg'),(37,'Kinder Country',0.70,0.50,2,'Kinder Country.jpg'),(38,'Kinder Maxi',0.50,0.30,2,'Kinder Maxi.jpg'),(39,'Gaufre',0.50,0.30,2,'Gaufre.jpg'),(79,'Café + Viennoiserie',1.90,1.70,3,'Café - Viennoiserie.svg'),(76,'Repas',2.70,2.50,2,'Repas.jpg'),(75,'Café Vanille',0.70,0.50,0,'Café Vanille.jpg'),(91,'Chocolat chaud',0.70,0.50,0,'Chocolat chaud.jpg'),(78,'Compotes',0.60,0.40,2,'Compotes.jpg'),(83,'Carambar/sucette',0.30,0.10,2,'Sucette.jpg'),(82,'Barquettes ',0.50,0.30,2,'Barquettes .jpeg'),(92,'Twix',0.80,0.60,2,'Twix.jpg'),(89,'Monster',1.70,1.50,1,'Monster.png'),(87,'Balisto',0.50,0.30,2,'Balisto.png'),(99,'Redbull',1.40,1.20,1,'Redbull.png'),(95,'M&MS',0.70,0.50,2,'M&M\'s.jpg'),(96,'Tornade bacon',1.00,0.80,2,'Tornade_Bacon.jpg'),(97,'Dragibus',0.30,0.30,2,'Dragibus.jpg'),(98,'Chewing-gum',0.50,0.50,2,'Freedent.jpg');
+INSERT INTO `products` VALUES
+(19,'Sodas',0.80,0.60,1,'Sodas.jpg',0),
+(8,'Thé',0.60,0.40,0,'Thé.jpg',0),
+(16,'Grand Café',0.70,0.50,0,'Grand Café.jpg',0),
+(17,'Cacolac',0.80,0.60,1,'Cacolac.jpg',0),
+(18,'Jus de Fruits',0.70,0.50,1,'Jus de Fruits.jpg',0),
+(20,'Viennoiserie',1.40,1.20,2,'Viennoiserie.jpg',0),
+(21,'Maxi Viennoiserie',1.60,1.40,2,'Maxi Viennoiserie.jpg',0),
+(22,'Cookies',1.70,1.50,2,'Cookies.jpg',0),
+(24,'Pépito',1.70,1.50,2,'Pépito.jpg',0),
+(25,'Sablés Bio',1.20,1.00,2,'Sablés Bio.jpg',0),
+(80,'Thé + Viennoiserie',1.80,1.60,3,'Thé + Viennoiserie.svg',0),
+(27,'Galette de Riz Choco',2.00,1.80,2,'Galette de Riz Choco.jpg',0),
+(28,'Barres Céréales',0.50,0.30,2,'Barres Céréales.png',0),
+(29,'Nouilles Instantannées',1.20,1.00,2,'Nouilles Instantannées.jpg',0),
+(30,'Repas Bio',3.00,2.80,2,'Repas Bio.jpg',0),
+(31,'Chips',0.50,0.30,2,'Chips.jpg',0),
+(32,'Kit-Kat',0.80,0.60,2,'Kit-Kat.jpg',0),
+(33,'Mars',0.80,0.60,2,'Mars.jpeg',0),
+(34,'Lion',0.80,0.60,2,'Lion.jpg',0),
+(94,'Petit beurre',0.40,0.20,2,'Petit_Beurre_Choco.jpg',0),
+(36,'Kinder Bueno/White',1.00,0.80,2,'Kinder Bueno.jpg',0),
+(37,'Kinder Country',0.70,0.50,2,'Kinder Country.jpg',0),
+(38,'Kinder Maxi',0.50,0.30,2,'Kinder Maxi.jpg',0),
+(39,'Gaufre',0.50,0.30,2,'Gaufre.jpg',0),
+(79,'Café + Viennoiserie',1.90,1.70,3,'Café - Viennoiserie.svg',0),
+(76,'Repas',2.70,2.50,2,'Repas.jpg',0),
+(75,'Café Vanille',0.70,0.50,0,'Café Vanille.jpg',0),
+(91,'Chocolat chaud',0.70,0.50,0,'Chocolat chaud.jpg',0),
+(78,'Compotes',0.60,0.40,2,'Compotes.jpg',0),
+(83,'Carambar/sucette',0.30,0.10,2,'Sucette.jpg',0),
+(82,'Barquettes ',0.50,0.30,2,'Barquettes .jpeg',0),
+(92,'Twix',0.80,0.60,2,'Twix.jpg',0),
+(89,'Monster',1.70,1.50,1,'Monster.png',0),
+(87,'Balisto',0.50,0.30,2,'Balisto.png',0),
+(99,'Redbull',1.40,1.20,1,'Redbull.png',0),
+(95,'M&MS',0.70,0.50,2,"M&M\'s.jpg",0),
+(96,'Tornade bacon',1.00,0.80,2,'Tornade_Bacon.jpg',0),
+(97,'Dragibus',0.30,0.30,2,'Dragibus.jpg',0),
+(98,'Chewing-gum',0.50,0.50,2,'Freedent.jpg',0);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
