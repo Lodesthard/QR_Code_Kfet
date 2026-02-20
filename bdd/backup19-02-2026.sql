@@ -130,6 +130,7 @@ CREATE TABLE `products` (
   `bdlc_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `category` tinyint NOT NULL COMMENT '[0 = boisson chaude | 1 = boisson froide | 2 = snack]',
   `image` varchar(255) NOT NULL DEFAULT 'undefined.jpg',
+  'stock' int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
