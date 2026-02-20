@@ -58,6 +58,18 @@ $(document).ready(function() {
         })
     })
 
+    // Product Stock
+    $('.product-stock').each((i, obj) => {
+        $(obj).editable({
+            name: 'stock',
+            type: 'number',
+            step: '1',
+            min: 0,
+            title: 'Stock',
+            url: POST_URL
+        })
+    })
+
     // Product Image
     $('.product-image').each((i, obj) => {
         $(obj).editable({
