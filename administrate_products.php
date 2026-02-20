@@ -96,11 +96,25 @@
                                     </a>
                                 </td>
                                 <td>
+                                    <form method="post" action="lib/admin/add_stock.php" class="m-0">
+                                        <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+                                        <input type="hidden" name="quantity" value="-1">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">-</button>
+                                    </form>
+                                    <a href="#" class="product-stock" data-pk="<?php echo htmlspecialchars($product['id']); ?>"><?php echo htmlspecialchars($product['stock']); ?></a>
+                                    <form method="post" action="lib/admin/add_stock.php" class="m-0">
+                                        <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-outline-success btn-sm">+</button>
+                                    </form>
+                                </td>
+                                <td>
                                     <a href="#" class="product-category" data-value="<?php echo htmlspecialchars($product['category']); ?>" data-pk="<?php echo htmlspecialchars($product['id']); ?>"></a>
                                 </td>
                                 <td>
                                     <a href="#" class="product-image" data-pk="<?php echo htmlspecialchars($product['id']); ?>"><?php echo htmlspecialchars($product['image']); ?></a>
                                 </td>
+
                                 <td>
                                     <a class="delete-row" href="lib/admin/product_delete.php?id=<?php echo htmlspecialchars($product['id']); ?>">
                                         <button type="button" title="Supprimer l'élément" class="btn btn-outline-danger">
