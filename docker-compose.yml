@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  db:
+    container_name: db
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ensim1995
+      MYSQL_DATABASE: kfet
+      MYSQL_USER: admin9988
+      MYSQL_PASSWORD: ensim1995
+      MYSQL_ROOT_HOST: 'php-apache' 
+    ports:
+      - "9906:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./kfet.sql:/docker-entrypoint-initdb.d/kfet.sql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8003:80
+    depends_on:
+      - db
+  php-apache:
+    container_name: php-apache
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - 8001:80
+      - 8002:443
+volumes:
+  db_data: {}

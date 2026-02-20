@@ -1,0 +1,372 @@
+/* 
+* Home CSS
+* ----------------------------------------------------------------------------
+* This stylesheet is reserved only for the index page. Do not import it on global
+*/
+
+.index-profile {        
+    margin: 100px 20px 10px 20px;
+    height: 60px;
+}
+
+@media(max-width:  600px) {
+    .index-profile {        
+        margin: 60px 20px 10px 20px;
+        height: 60px;
+    }
+}
+
+.index-profile-picture{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  float: left;
+  vertical-align: middle;
+  margin: 10px 0;
+}
+
+.index-profile .content{
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 60px;
+    color: black;
+}
+
+.index-name{ 
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.index-money{
+  font-size: 14px;
+  /*font-style: italic;*/
+}
+
+.sub-categories-title{
+    margin-left: 20px;
+    font-size: 14px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: black;
+}
+
+.menuspan{
+    height: 2px;
+    background: black;
+
+    display: block;
+    position: absolute;
+    border-radius: 3px;
+}
+
+#span-event{
+    width: calc(100% - 125px);
+    margin: -5px 20px 10px 105px;
+}
+
+#span-like{
+    width: calc(100% - 245px);
+    margin: -5px 20px 0px 225px;
+}
+
+.sub-categories{
+    margin: 10px auto;
+    /*15vh for the box and 20px for the title*/ 
+    height: calc(15vh + 20px);
+}
+
+.carousel {
+    height: calc(0.5625 * (100vw - 40px) + 20px);
+}
+
+.carousel-item img {
+    height: calc(0.5625 * (100vw - 40px));
+    width: calc(100% - 40px);
+    margin: 5px 20px;
+}
+
+.carousel-indicators{
+    bottom: -20px;
+    z-index: 1;
+}
+
+.carousel-control-prev, .carousel-control-next{
+    height: calc(0.5625 * (100vw - 40px));
+    margin: 15px 20px;
+    margin-bottom: 0;
+}
+
+.sub-categories .favorites-items{
+    height: 15vh;
+    width: calc(100% - 40px);       /*Same size as .carousel-item img : must use a variable for that*/
+    margin: 5px 20px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    overflow: hidden;
+}
+
+.favorites-items .sub-presentation-card{
+    height: 100%;
+    width: calc((100vw - 70px) / 3);
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.favorites-items .sub-presentation-card .card-picture{
+    padding-top: 2px;
+    
+    display: block;
+    margin: 0 auto;
+    
+    float: none;
+
+    height: 75%;
+    width: auto;
+}
+
+.favorites-items .sub-presentation-card .content{
+    padding: 2px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.favorites-items .sub-presentation-card .content p {
+    width: 100%;
+    margin-bottom: 2px;
+    line-height: 0.9;
+}
+
+.favorites-items .sub-presentation-card .content .card-name{
+    font-size: 14px;
+    padding-left: 4px;
+    max-width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.favorites-items .sub-presentation-card .content .card-subtitles{
+    float: right;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.centered-text{
+    text-align: center;
+    margin-left: 0px;
+    margin-bottom: -10px;
+}
+
+#categories-items{
+    height: calc(35vh + 20px);
+}
+
+/* Create two equal columns that floats next to each other */
+
+.column {
+    width: calc(50% - 10px);
+    height: 15vh;
+    /*background-color: grey;*/
+    margin: 5px;
+    background-size: 100% auto;
+    cursor: pointer;
+}
+
+.row{
+    width: calc(100% - 40px);
+    margin: 10px 20px;
+    justify-content: space-between;
+}
+
+.underline{
+    border-bottom: black 2px solid;
+    margin:  -5px 20px;
+}
+
+
+/*********************************/
+
+.header h1{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.header p{
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+#shop .header h1{
+    border-top: 1px solid black;
+    padding: 10px 0;
+    font-size: 24px;
+}
+
+.presentation-card {
+    float: left;
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 10px;
+
+    background-color: white;
+
+    width: calc(100% / 4 - 40px);
+    margin: 10px 20px;
+
+    cursor: pointer;
+}
+
+.card-picture{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin: 10px 0 0 10px ;     
+}
+
+.presentation-card .content{
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 70px;
+}
+
+.card-name{ 
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-subtitles{
+    font-size: 14px;
+    /*font-style: italic;*/
+}
+
+/* 
+*   We are adding a new breakpoint for having a better view of the team on middle sized screen
+*
+*   Tips : Using calc function to share the space fairly on the screen
+*   width = size of the box / number of columns - margin's sides size * 2  
+*/
+
+@media(max-width: 1200px){
+    .presentation-card{
+        width: calc(100% / 2 - 40px);
+        margin: 10px 20px;
+    }
+}
+
+@media(max-width: 600px){
+    .presentation-card{
+        width: calc(100% - 20px);
+        margin: 5px 10px;
+    }
+}
+
+/*********************************/
+
+.shoping-cart .icon {
+    color:  black;
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+    font-size: 2em;
+    padding: 5px 10px;
+
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 0 20px 20px 0;
+
+    z-index: 1500;
+    background-color: #f1f2f6;
+    background-image: linear-gradient(315deg, #f1f2f6 0%, #c9c6c6 74%);
+
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
+
+.shoping-cart .icon-check {
+    right: 70px;
+    background-color: #ff8c00;
+    background-image: linear-gradient(315deg, #ff8c00 0%, #db7800 74%);
+    display: none;
+}
+
+.shoping-cart .fa-layers {
+    display: inline-block;
+}
+
+.shoping-cart .icon .fa-layers-counter{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 0 0 40px 0;
+    font-size: 20px;
+    background-color: #ff8c00;
+    border-radius: 100%;
+
+    height: 30px;
+    width: 30px;
+    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.75);
+}
+
+#order-summary-form .badge {
+    background-color: #ff8c00;
+}
+
+/************************/
+
+#item-details .btn {
+    background-color: var(--color-primary);
+    border-color: var(--color-secondary);
+}
+
+#item-details button:focus {
+    box-shadow: 0 0 0 .2rem var(--color-secondary);
+}
+
+.return-button{
+    width: auto;
+    color: black;
+    font-size: 18px;
+    margin-bottom: -10px;
+    user-select: none;
+}
+
+.return-button i{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.return-button p{
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+.return-button p:hover{
+    text-decoration: underline;
+}

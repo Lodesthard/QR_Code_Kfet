@@ -1,0 +1,379 @@
+/*
+ * Global CSS
+ * ----------------------------------------------------------------------------
+ * All CSS files must be imported here so that you only have to link this global
+ * file in your html/php files.
+ * You have to import them from the most general to the most specific.
+ */
+
+/* Basic CSS for the apps */
+@import "theme.css";        /* Color variables for the applied theme */
+@import "typography.css";   /* Fonts */
+
+/* General variables */
+* {
+  --nav-menu-height-lg: 100px;
+  --nav-menu-height-sm: 60px;
+  --margin-width : calc(100% - 40px);
+}
+
+#biggerLogo{
+  display: block; 
+  height: 200px;
+  width: 20vh;
+  margin: 50px auto 0 auto;
+}
+
+@media (max-width: 600px){
+  #biggerLogo{
+    height: 150px; width: 150px;
+    margin: 40px auto;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.unclickable {
+  cursor: not-allowed;
+}
+
+/****** Navbar ******/
+
+
+nav{
+  position : fixed;                  
+  top: 0;
+  height: var(--nav-menu-height-lg);
+  width: 100%;
+  z-index: 20;
+  background: var(--color-primary);
+}
+
+nav .logo{
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  height: 80px;
+  width: 80px;
+  z-index: 2;
+}
+
+#menuToggle{
+  display: block;
+  position: relative;
+  top: 40px;
+  margin-left: 30px;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input:checked ~ ul{
+  transform: none;
+}
+
+#menu
+{
+  height: 105vh;  
+  width: 500px;
+  position: absolute;
+  margin: -100px 0 0 -50px;
+  padding: 50px;
+  padding-top: 150px;
+  
+  background: var(--color-menu-background);
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+
+  overflow-y: auto;
+} 
+ 
+#menu li a, #menu a{
+  text-decoration: none;
+  color: var(--color-menu-font-text);
+  
+  transition: color 0.3s ease;
+
+  font-family: var(--menu-font-family);     
+  font-size: var(--menu-font-size);
+  font-weight: var(--menu-font-weight);     
+}
+
+#menu li{
+  padding: 5px 0;
+}
+
+#menu .dropdown-toggle{
+  margin-left: -16px;
+}
+
+#menuToggle .active, #menuToggle a:hover{
+  color : var(--color-menu-font-text-hover);
+}
+
+/* For the animation on the navbar
+ *
+ * we are using 3 spans placed like a burger in a first time 
+ * and with a single click, we are moving those span for making a cross
+ */
+ 
+#menuToggle input{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; 
+  z-index: 2; 
+  
+  -webkit-touch-callout: none;
+}
+ 
+
+#menuToggle span{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: var(--color-menu-span-burger);
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.3s ease;
+}
+ 
+#menuToggle span:first-child{
+  transform-origin: 0% 0%;
+}
+ 
+#menuToggle span:nth-last-child(2){
+  transform-origin: 0% 100%;
+}
+ 
+#menuToggle input:checked ~ span{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: var(--color-menu-span-burger);
+}
+
+ #menuToggle input:checked ~ span:nth-last-child(3){
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+ 
+#menuToggle input:checked ~ span:nth-last-child(2){
+  transform: rotate(-45deg) translate(0, -1px);
+}
+ 
+#navspan{
+  height: 2px;
+  background: black;
+  width: 100%;
+  margin-top: 65px;
+
+  display: block;
+  position: absolute;
+  border-radius: 3px;
+  
+  z-index: 2;
+}
+
+.margin-top{
+  margin-top: 150px;
+}
+
+/****** Responsive Navbar on smaller screens ******/
+@media (max-width: 600px){
+  nav{
+    height:60px;
+  }
+
+  #menuToggle{
+    top: 15px;
+    margin-left: 15px;
+  }
+
+  nav .logo{
+    height: 40px;
+    width: 40px;
+    margin-top: 4px;
+  }
+
+  #navspan{
+    margin-top: 30px;
+  }
+
+  #menu{
+    height: 120vh;
+    width: calc(100vw + 50px);
+  }
+
+  #menu li, hr{
+    padding-left: 10px;
+  }
+
+  hr{
+    width: auto;
+  }
+
+  .margin-top{
+    margin-top: 100px;
+  }
+}
+
+body{
+  background: var(--color-primary);
+  background-image: url("../res/wave (1).svg"),url("../res/wave.svg"),url("../res/wave (2).svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% auto;
+  background-position: bottom;
+
+  animation-name: moving-bg;
+  animation-iteration-count: infinite;
+  animation-duration: 5s;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes moving-bg{
+  0%    {background-position: 50% bottom, 30% bottom, 0% bottom;}
+  25%   {background-position: 48% bottom, 30% 98%, 0% 95%;}
+  50%   {background-position: 50% bottom, 30% bottom, 0% bottom;}
+  75%   {background-position: 48% bottom, 30% 98%, 0% 95%;}
+  100%  {background-position: 50% bottom, 30% bottom, 0% bottom;}
+}
+
+hr{
+  width: 100%;
+  background-color: black;
+}
+
+.standard-form a{
+  text-decoration: underline;
+  color: black;
+  font-size: var(--form-label-font-size);
+}
+
+.standard-form a:hover{
+  color: var(--color-primary);
+}
+
+.float-left{
+  float: left;
+}
+
+.float-right{
+  float: right;
+}
+
+.standard-form {
+  background-color: var(--color-secondary);
+  margin: 5% auto;
+  padding: 0 20px 20px 20px;
+  width: 80vw;
+  max-width: 400px;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 23px;
+}
+
+.standard-form h1{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+
+  font-family: var(--form-header-font-family);      
+  font-size: var(--form-header-font-size);
+  font-weight: var(--form-header-font-weight);
+}
+
+.standard-form .form-group{
+  padding: 5px;
+  margin: 0 5px 0 5px;
+}
+
+.standard-form ::placeholder, 
+.standard-form .form-group select{
+  font-size: var(--form-label-font-size);
+}
+
+.standard-form .form-group input,
+.standard-form .form-group select
+{
+  background-color: var(--color-secondary);
+  border: 1px black solid;
+  height: 40px;
+}
+
+.standard-form .form-group input[type="text"]{
+  line-height: 40px;
+}
+
+
+.standard-form .form-group label{
+  font-family: var(--form-label-font-family);     
+  font-size: var(--form-label-font-size);
+  font-weight: var(--form-label-font-weight);
+}
+
+.form-row{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+input[type="submit"]{
+  font-size: var(--form-button-font-size);
+}
+
+.form-check-input{
+  margin-top: -0.6rem;
+}
+
+@media (max-width: 600px){
+  .standard-form {
+    margin: 20px 10%;
+    padding: 0 10px 20px 15px;
+  }
+
+  .standard-form .form-group{
+    padding: 2px;
+    margin: 0 5px 0 5px;
+  }
+
+  body{
+    height: auto;
+    background-size: auto 200px;
+  }
+}
+
+.btn-round {
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+}
+
+.submit-rounded {
+  border-radius: 2em;
+  padding: 0.5em;
+}

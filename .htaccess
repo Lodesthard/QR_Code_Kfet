@@ -1,0 +1,12 @@
+<FilesMatch "database_logs.php">
+	Deny from all
+</FilesMatch>
+
+# empêcher le repertoire .git d'être servi par Apache
+RedirectMatch 404 /\.git
+RedirectMatch 404 /kfet.sql
+RedirectMatch 404 /ssl
+RedirectMatch 404 /apache
+RedirectMatch 404 /Dockerfile
+RedirectMatch 404 /docker-compose.yml
+RedirectMatch 404 /php.ini
