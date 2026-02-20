@@ -62,6 +62,6 @@
     $mysqli->close();
 
     // Return to the index page
-    header('Location: ../index.php');
+    header('Location: ../administrate_products.php');
     exit();
 ?>
