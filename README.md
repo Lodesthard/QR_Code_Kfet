@@ -1,36 +1,29 @@
 # Le site de la kfet de l'ENSIM !
 
-Bien que pas incroyable, voici le site de notre chère Kfet qui nous permet de payer directement sans devoir faire des
-Lydia toutes les 7 secondes.
+Voici le site de la Kfet de l'ENSIM !
 
-Ce site a été réalisé par :
-- Tom de Pasquale • _Développement, design, base de donnée et serveur_
-- Aksel Vaillant • _Développement et design_
-- Maël Pénicaud • _Tests et gestion du serveur_
-- Numa Gallipot • _Infographie_
+Ce site permet de commander des aliments la kfet pour les clients grâce à un système de rechargement de comptes gérés par les baristas.
 
-# Mise à jour du site
+Les clients vont d'abord payer par carte puis les baristas vont recharger leur compte avec un montant.
 
-Pour mettre à jour le site une fois les modifications effectuées et push sur Github, il faut clone le repository et
-modifier les permissions :
+Le client peut ensuite commander et sa commande sera validé s'il a assez d'argent.
 
-```bash
-sudo chown -R www-data kfet-lemans/
-sudo chmod -R 777 kfet-lemans/
-```
+Le problème est qu'il y a beaucoup de vols donc le but de ce projet est de rajouter un système de gestion de code et de validation de commande par QR code.
 
-# Plugins et *toolkits* utilisés
+# Déploiement
 
-- [Bootstrap v4.5.2](https://getbootstrap.com/)
-- [Fast table filter v26.11.2018](https://www.jqueryscript.net/table/fast-table-filter.html)
-- [Iconic](https://useiconic.com/open)
-- [jQuery v3.5.1](https://jquery.com/)
-- [Popper v1.16](https://popper.js.org/)
-- [Sort Element v0.11](https://github.com/padolsey-archive/jquery.fn/tree/master/sortElements)
-- [Validation v1.19.3](https://jqueryvalidation.org/)
-- [X-editable v1.5.3](https://github.com/vitalets/x-editable)
-- [X-editable-file v1.0](https://github.com/SUKOHI/x-editable-file)
+Pour déployer le site en local, il faut tout d'abord cloner ce dépot sur sa machine et avoir Docker d'installé.
 
-### Note :
-X-editable fonctionne correctement avec bootstrap-4. Le plugin X-editable-file a été modifié pour fonctionner lui aussi 
-avec bootstrap-4.
+Il faut ensuite exécuter la commande docker compose up -d --build pour build le projet.
+
+Le site va se trouver à l'adresse http://localhost:8001
+
+Un compte test a été créé :
+
+identifient : 1
+mot de passe : admin
+
+Pour visualiser la base de données il faut aller à l'adresse http://localhost:8003.
+
+identifient : admin9988
+mot de passe : ensim1995
