@@ -1,0 +1,57 @@
+name: CI Docker PHP
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - '**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Construire les containers
+        run: docker compose build
+
+      - name: Démarrer les services
+        run: docker compose up -d
+
+      - name: Attendre MySQL
+        run: |
+          for i in {1..30}; do
+            if docker compose exec -T db mysqladmin ping -h localhost -uroot -p"${MYSQL_ROOT_PASSWORD}" --silent; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "MySQL ne répond pas"
+          exit 1
+        env:
+          MYSQL_ROOT_PASSWORD: ensim1995
+
+      - name: Vérifier que le site répond
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:8001; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Le site ne répond pas"
+          docker compose logs php-apache
+          exit 1
+
+      - name: Afficher les logs si échec
+        if: failure()
+        run: docker compose logs
+
+      - name: Arrêter les containers
+        if: always()
+        run: docker compose down -v
