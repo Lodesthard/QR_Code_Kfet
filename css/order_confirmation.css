@@ -1,0 +1,48 @@
+.confirmation-wrapper {
+    max-width: 480px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.confirmation-header {
+    margin-bottom: 1.5rem;
+}
+
+.confirmation-icon {
+    font-size: 3.5rem;
+    color: #28a745;
+    margin-bottom: 0.5rem;
+}
+
+.qr-zone {
+    display: inline-block;
+    padding: 1.2rem;
+    border: 3px solid #eb5757;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    background: #fff;
+}
+
+.qr-zone #qrcode {
+    display: flex;
+    justify-content: center;
+}
+
+.qr-hint {
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.order-summary-box {
+    text-align: left;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.order-summary-box h5 {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}

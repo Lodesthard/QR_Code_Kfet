@@ -95,18 +95,27 @@
                                         <?php echo htmlspecialchars($product['bdlc_price']); ?>
                                     </a>
                                 </td>
-                                <td>
-                                    <form method="post" action="lib/admin/add_stock.php" class="m-0">
-                                        <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
-                                        <input type="hidden" name="quantity" value="-1">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">-</button>
-                                    </form>
-                                    <a href="#" class="product-stock" data-pk="<?php echo htmlspecialchars($product['id']); ?>"><?php echo htmlspecialchars($product['stock']); ?></a>
-                                    <form method="post" action="lib/admin/add_stock.php" class="m-0">
-                                        <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
-                                        <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="btn btn-outline-success btn-sm">+</button>
-                                    </form>
+                                <td class="stock-cell">
+                                    <div class="d-flex align-items-center">
+                                        <form method="post" action="lib/admin/add_stock.php" class="m-0 d-inline">
+                                            <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+                                            <input type="hidden" name="quantity" value="-1">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">-</button>
+                                        </form>
+                                        <span class="mx-2 <?php echo ($product['stock'] <= 0) ? 'text-danger font-weight-bold' : ''; ?>">
+                                            <?php echo htmlspecialchars($product['stock']); ?>
+                                        </span>
+                                        <form method="post" action="lib/admin/add_stock.php" class="m-0 d-inline">
+                                            <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="btn btn-outline-success btn-sm">+</button>
+                                        </form>
+                                        <form method="post" action="lib/admin/add_stock.php" class="m-0 d-inline ml-2">
+                                            <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+                                            <input type="number" name="quantity" class="form-control form-control-sm d-inline" style="width:70px" placeholder="Qté">
+                                            <button type="submit" class="btn btn-outline-primary btn-sm">OK</button>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="#" class="product-category" data-value="<?php echo htmlspecialchars($product['category']); ?>" data-pk="<?php echo htmlspecialchars($product['id']); ?>"></a>
@@ -160,6 +169,10 @@
                                 <option value="2">Snack</option>
                                 <option value="3">Formule</option>
                             </select>
+                        </div>
+                        <div class="form-group col-auto">
+                            <label for="i-product-stock">Stock initial</label>
+                            <input class="form-control" type="number" id="i-product-stock" min="0" name="stock" value="0" required>
                         </div>
                         <div class="form-group col">
                             <label class="" for="i-product-image">Image du produit</label>

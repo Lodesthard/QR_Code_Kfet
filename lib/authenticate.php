@@ -3,15 +3,51 @@ session_start();
 
 require_once('connect.php');
 
-// Check if the data from the login form was submitted, isset() will check if the data exists.
+// Check if the data from the login form was submitted
 if(isset($_POST['student_number'], $_POST['password'])) {
     $student_number = $_POST['student_number'];
     $password = $_POST['password'];
-} else if(isset($_COOKIE["kfet-login"], $_COOKIE["kfet-password"]) && $_COOKIE["kfet-login"] != "" && $_COOKIE["kfet-password"] != "") {
+} else if(isset($_COOKIE["kfet-login"], $_COOKIE["kfet-token"]) && $_COOKIE["kfet-login"] != "" && $_COOKIE["kfet-token"] != "") {
+    // Cookie-based auto-login using secure token
     $student_number = $_COOKIE["kfet-login"];
-    $password = $_COOKIE["kfet-password"];
+    $cookie_token = $_COOKIE["kfet-token"];
+
+    $connection = connectToDatabase();
+    if($connection == FALSE) exit();
+
+    require_once "util.php";
+    $student_number = formatStudentNumber($student_number);
+
+    $req = 'SELECT id, username, bdlc_member, auth_level, credit, remember_token FROM users WHERE student_number = ?';
+    if ($stmt = $connection->prepare($req)) {
+        $stmt->bind_param('s', $student_number);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($id, $username, $bdlc_member, $auth_level, $credit, $remember_token);
+            $stmt->fetch();
+
+            if ($remember_token && hash_equals($remember_token, $cookie_token)) {
+                session_regenerate_id();
+                $_SESSION['logged_in'] = TRUE;
+                $_SESSION['username'] = $username;
+                $_SESSION['bdlc_member'] = $bdlc_member;
+                $_SESSION['auth_level'] = $auth_level;
+                $_SESSION['id'] = $id;
+                $_SESSION['credit'] = $credit;
+                header('Location: ../index.php');
+                exit();
+            }
+        }
+    }
+
+    // Invalid token - clear cookies
+    setcookie("kfet-login", "", time() - 3600, "/");
+    setcookie("kfet-token", "", time() - 3600, "/");
+    header('Location: ../login.php?login_status=expired');
+    exit();
 } else {
-    // Could not get the data that should have been sent.
     exit('Please fill both the student_number and password fields!');
 }
 
@@ -28,20 +64,16 @@ $student_number = formatStudentNumber($student_number);
 $req = 'SELECT id, password, username, bdlc_member, auth_level, credit FROM users WHERE student_number = ?';
 if ($stmt = $connection->prepare($req)) {
 
-	// Bind parameters (s = string, i = int, b = blob, etc), in our case the student number is an int so we use "i"
 	$stmt->bind_param('s', $student_number);
 	$stmt->execute();
-	// Store the result so we can check if the account exists in the database.
 	$stmt->store_result();
 
 	if ($stmt->num_rows > 0) {
 		$stmt->bind_result($id, $password_db, $username, $bdlc_member, $auth_level, $credit);
 		$stmt->fetch();
 		// Account exists, now we verify the password.
-		// Note: remember to use password_hash in your registration file to store the hashed passwords.
 		if (password_verify($password, $password_db)) {
 			// Verification success! User has logged-in!
-			// Create sessions, so we know the user is logged in, they basically act like cookies but remember the data on the server.
 			session_regenerate_id();
 			$_SESSION['logged_in'] = TRUE;
 			$_SESSION['username'] = $username;
@@ -50,10 +82,20 @@ if ($stmt = $connection->prepare($req)) {
 			$_SESSION['id'] = $id;
 			$_SESSION['credit'] = $credit;
 
-            // Create a connexion cookie
-            $n_days = 30;
-            setcookie("kfet-login", $student_number, time() + (86400 * $n_days), "/");
-            setcookie("kfet-password", $password, time() + (86400 * $n_days), "/");
+            // Create a secure remember token cookie (not the plain password)
+            if(isset($_POST['remember_me'])) {
+                $n_days = 30;
+                $remember_token = bin2hex(random_bytes(32));
+                setcookie("kfet-login", $student_number, time() + (86400 * $n_days), "/");
+                setcookie("kfet-token", $remember_token, time() + (86400 * $n_days), "/");
+
+                // Store the token in database
+                if($update_stmt = $connection->prepare('UPDATE users SET remember_token = ? WHERE id = ?')) {
+                    $update_stmt->bind_param('si', $remember_token, $id);
+                    $update_stmt->execute();
+                    $update_stmt->close();
+                }
+            }
 
 			header('Location: ../index.php');
 			exit();
@@ -67,4 +109,5 @@ if ($stmt = $connection->prepare($req)) {
 
 // There has been an error
 header('Location: ../login.php?login_status=error');
+exit();
 ?>

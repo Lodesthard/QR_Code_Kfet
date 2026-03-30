@@ -3,7 +3,7 @@
     session_start();
 
     require_once('redirect.php');
-    auth_level(2);
+    auth_level(1);
     
     // Include the database connection file from absolute path
     require_once('connect.php');

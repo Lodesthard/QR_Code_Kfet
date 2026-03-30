@@ -51,15 +51,22 @@
         $order_id = $order_row['id'];
         $datetime = $order_row['datetime'];
         $user_id = $order_row['user_id'];
+        $order_status = isset($order_row['status']) ? intval($order_row['status']) : 0;
+        $status_labels = [0 => 'En attente', 1 => 'En préparation', 2 => 'Servie'];
+        $status_classes = [0 => 'badge-warning', 1 => 'badge-info', 2 => 'badge-success'];
+        $status_label = isset($status_labels[$order_status]) ? $status_labels[$order_status] : 'Inconnu';
+        $status_class = isset($status_classes[$order_status]) ? $status_classes[$order_status] : 'badge-secondary';
 
         // Get the name of the user
         $name = 'Inconnu.e';
-        $name_query_result = $mysqli->query('SELECT username FROM users WHERE id=' . $user_id);
-        if(!$name_query_result) {
-            echo '<small class="text-danger">Error : '. $mysqli->error .'</small>';
-        } else {
-            $name = $name_query_result->fetch_array()['username'];
-            $name_query_result->close();
+        if($name_stmt = $mysqli->prepare('SELECT username FROM users WHERE id = ?')) {
+            $name_stmt->bind_param('i', $user_id);
+            $name_stmt->execute();
+            $name_result = $name_stmt->get_result();
+            if($row = $name_result->fetch_array()) {
+                $name = $row['username'];
+            }
+            $name_stmt->close();
         }
 
         // Set a time message depending on the interval
@@ -76,16 +83,14 @@
             $date_message = 'Il y a ' . $time_delta->h . ' heures'; 
         } else if($time_delta->h == 0 && $time_delta->i == 1) {
             $date_message = 'Il y a ' . $time_delta->i . ' minute';
-        } else if($time_delta->h == 0 && $time_delta->i == 1) {
-            $date_message = 'Il y a ' . $time_delta->i . ' minute';
         } else if($time_delta->h == 0 && $time_delta->i != 0) {
             $date_message = 'Il y a ' . $time_delta->i . ' minutes';
         } else if($time_delta->i == 0) {
             $date_message = 'Il y a quelques secondes';
         }
 
-        // Get all products form this order
-        $req = 'SELECT name, price, bdlc_price, quantity FROM item_orders o INNER JOIN products p ON o.product_id = p.id WHERE order_id=' . $order_id;
+        // Get all products from this order
+        $req = 'SELECT name, price, bdlc_price, quantity FROM item_orders o INNER JOIN products p ON o.product_id = p.id WHERE order_id = ' . intval($order_id);
         $item_order_query_result = $mysqli->query($req);
         if(!$item_order_query_result) {
             echo '<small class="text-danger">Error : '. $mysqli->error .'</small>';
@@ -119,7 +124,8 @@
                         <div class="sortable" data-toggle="collapse" data-target="#collapse<?php echo $order_id; ?>">
                             <p class="mb-0">
                                 <span class="badge badge-secondary mr-1">#<?php echo $order_id; ?></span>
-                                par <?php echo $name; ?> : <b><?php echo number_format($total_price, 2); ?> €</b>
+                                <span class="badge <?php echo $status_class; ?> mr-1"><?php echo $status_label; ?></span>
+                                par <?php echo htmlspecialchars($name); ?> : <b><?php echo number_format($total_price, 2); ?> €</b>
                             </p>
                             <small class=""><?php echo $date_message; ?></small>
                         </div>

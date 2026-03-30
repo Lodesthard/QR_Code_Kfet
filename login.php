@@ -4,8 +4,15 @@
 
     require_once "lib/connect.php";
 
-    if(isset($_COOKIE["kfet-login"], $_COOKIE["kfet-password"])) {
+    if(isset($_COOKIE["kfet-login"], $_COOKIE["kfet-token"])) {
         header("Location: lib/authenticate.php");
+        exit();
+    }
+
+    // Nettoyer les anciens cookies obsolètes
+    if(isset($_COOKIE["kfet-password"])) {
+        setcookie("kfet-password", "", time() - 3600, "/");
+        setcookie("kfet-login", "", time() - 3600, "/");
     }
 
 	if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE) {

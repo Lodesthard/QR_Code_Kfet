@@ -9,11 +9,13 @@ function auth_level($level) {
         if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == FALSE) {
             // Redirect to the login page
             header('Location: login.php');
+            exit();
         } else {
             // Check the authorize level
             if($_SESSION['auth_level'] < $level) {
-                // Redirecte to the home page
+                // Redirect to the home page
                 header('Location: index.php');
+                exit();
             }
         }
     }
@@ -23,7 +25,9 @@ function timeout($amount = 180) {
     if (isset($_SESSION['LAST_REQUEST_TIME'])) {
         if (time() - $_SESSION['LAST_REQUEST_TIME'] > $amount) {
             // session timed out, last request is longer than the timeout amount
+            session_destroy();
             header('Location: login.php');
+            exit();
         }
     }
 

@@ -20,9 +20,11 @@
       if($_SESSION['auth_level'] >= 1) {
 ?>
       <hr>
+      <a href="barista_scan.php"><li>Scanner une commande</li></a>
+      <a href="manage_stock.php"><li>Gérer les stocks</li></a>
       <a href="recharge_account.php"><li>Recharger un compte</li></a>
       <a href="add_user.php"><li>Ajouter une nouvelle personne</li></a>
-      <a href="observe_commands.php"><li>Historique des commmandes</li></a>
+      <a href="observe_commands.php"><li>Historique des commandes</li></a>
 
       <!--Pour le boss-->
 <?php

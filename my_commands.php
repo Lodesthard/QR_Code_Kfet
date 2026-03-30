@@ -32,8 +32,10 @@
     // Connect to the database
     if(!$mysqli = connectToDatabase()) exit();
 
-    $req = 'SELECT * FROM orders WHERE user_id = ' . $_SESSION['id'] . ' ORDER BY datetime DESC LIMIT 50';
-    $result = $mysqli->query($req);
+    $stmt = $mysqli->prepare('SELECT * FROM orders WHERE user_id = ? ORDER BY datetime DESC LIMIT 50');
+    $stmt->bind_param('i', $_SESSION['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if(!$result) {
         echo '<small class="text-danger">Error : '. $mysqli->error .'</small>';
@@ -47,14 +49,23 @@
         $order_id = $order_row['id'];
         $datetime = $order_row['datetime'];
         $user_id = $order_row['user_id'];
+        $order_status = isset($order_row['status']) ? intval($order_row['status']) : 0;
+        $qr_token = isset($order_row['qr_token']) ? $order_row['qr_token'] : null;
+        $status_labels = [0 => 'En attente', 1 => 'En préparation', 2 => 'Servie'];
+        $status_classes = [0 => 'badge-warning', 1 => 'badge-info', 2 => 'badge-success'];
+        $status_label = isset($status_labels[$order_status]) ? $status_labels[$order_status] : 'Inconnu';
+        $status_class = isset($status_classes[$order_status]) ? $status_classes[$order_status] : 'badge-secondary';
 
         // Get the name of the user
         $name = 'Inconnu.e';
-        $name_query_result = $mysqli->query('SELECT username FROM users WHERE id=' . $user_id);
-        if(!$name_query_result) {
-            echo '<small class="text-danger">Error : '. $mysqli->error .'</small>';
-        } else {
-            $name = $name_query_result->fetch_array()['username'];
+        if($name_stmt = $mysqli->prepare('SELECT username FROM users WHERE id = ?')) {
+            $name_stmt->bind_param('i', $user_id);
+            $name_stmt->execute();
+            $name_result = $name_stmt->get_result();
+            if($row = $name_result->fetch_array()) {
+                $name = $row['username'];
+            }
+            $name_stmt->close();
         }
 
         // Set a time message depending on the interval
@@ -71,8 +82,6 @@
             $date_message = 'Il y a ' . $time_delta->h . ' heures'; 
         } else if($time_delta->h == 0 && $time_delta->i == 1) {
             $date_message = 'Il y a ' . $time_delta->i . ' minute';
-        } else if($time_delta->h == 0 && $time_delta->i == 1) {
-            $date_message = 'Il y a ' . $time_delta->i . ' minute';
         } else if($time_delta->h == 0 && $time_delta->i != 0) {
             $date_message = 'Il y a ' . $time_delta->i . ' minutes';
         } else if($time_delta->i == 0) {
@@ -81,8 +90,8 @@
 
         
 
-        // Get all products form this order
-        $req = 'SELECT name, price, bdlc_price, quantity FROM item_orders o INNER JOIN products p ON o.product_id = p.id WHERE order_id=' . $order_id;
+        // Get all products from this order
+        $req = 'SELECT name, price, bdlc_price, quantity FROM item_orders o INNER JOIN products p ON o.product_id = p.id WHERE order_id = ' . intval($order_id);
         $item_order_query_result = $mysqli->query($req);
         if(!$item_order_query_result) {
             echo '<small class="text-danger">Error : '. $mysqli->error .'</small>';
@@ -116,8 +125,14 @@
                         <div class="sortable" data-toggle="collapse" data-target="#collapse<?php echo $order_id; ?>">
                             <p class="mb-0">
                                 <span class="badge badge-secondary mr-1">Commande #<?php echo $order_id; ?></span>
+                                <span class="badge <?php echo $status_class; ?> mr-1"><?php echo $status_label; ?></span>
                                 <b><?php echo number_format($total_price, 2); ?> €</b>
                                 <small class=""><?php echo $date_message; ?></small>
+                                <?php if($qr_token && $order_status < 2): ?>
+                                    <a href="order_confirmation.php?token=<?php echo urlencode($qr_token); ?>" class="btn btn-sm btn-outline-primary ml-2">
+                                        <i class="fas fa-qrcode"></i> QR Code
+                                    </a>
+                                <?php endif; ?>
                             </p>
                             
                         </div>

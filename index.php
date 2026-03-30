@@ -28,19 +28,25 @@
 		// Get all products
 		$mysqli = connectToDatabase();
 
-		$result = $mysqli->query('SELECT * FROM products WHERE category = ' . $category);
+		$stmt = $mysqli->prepare('SELECT * FROM products WHERE category = ?');
+		$stmt->bind_param('i', $category);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
 		while($row = $result->fetch_assoc()) {
 			$actualPrice = (isset($_SESSION['bdlc_member']) && $_SESSION['bdlc_member']) ? $row['bdlc_price'] : $row['price'];
 ?>
-<div class="presentation-card" id="<?php echo htmlspecialchars($row['id']); ?>" onclick="showItemDetails(<?php echo htmlspecialchars($row['id']); ?>,'<?php echo htmlspecialchars($row['name']); ?>', <?php echo htmlspecialchars($actualPrice); ?>, '<?php echo htmlspecialchars($row['image']) ?>')">
-  <img class="card-picture" id="card-picture" src="res/images/products/<?php echo htmlspecialchars($row['image']); ?>">
+<div class="presentation-card" id="<?php echo htmlspecialchars($row['id']); ?>"
+	onclick="showItemDetails(<?php echo htmlspecialchars($row['id']); ?>,'<?php echo htmlspecialchars($row['name']); ?>', <?php echo htmlspecialchars($actualPrice); ?>, '<?php echo htmlspecialchars($row['image']) ?>')">
+  <img class="card-picture" src="res/images/products/<?php echo htmlspecialchars($row['image']); ?>">
   <div class="content">
       <h4 class="card-name"><?php echo htmlspecialchars($row['name']); ?></h4>
       <h4 class="card-subtitles">Prix unitaire: <?php echo htmlspecialchars($actualPrice); ?> €</h4>
-  </div> 
+  </div>
 </div>
 <?php
 		}
+		$stmt->close();
 	}
 ?>
 
@@ -298,6 +304,16 @@
 		</div>
 	</div>
 
+	<?php if($_SESSION['auth_level'] >= 1): ?>
+	<div class="scan-btn clickable" onclick="window.location='barista_scan.php'">
+		<div class="icon">
+			<span class="fa-layers fa-fw">
+				<i class="fas fa-qrcode"></i>
+			</span>
+		</div>
+	</div>
+	<?php endif; ?>
+
 	<div class="shoping-cart clickable">
 		<div class="icon" onmouseup="toggleShop()">
 			<span class="fa-layers fa-fw">
@@ -330,7 +346,9 @@
         'database_error_5' : 'Il y a eu un problème avec la base de donnée ... (5)',
         'database_error_6' : 'Il y a eu un problème avec la base de donnée ... (6)',
         'not_enough_money' : 'Il semble que vous soyez trop pauvre ! Demandez à un.e barista de vous rajouter de l\'argent.',
-        'empty_order' : 'Vous venez vraiment de passer une commande avec rien ?!! --\''
+        'empty_order' : 'Vous venez vraiment de passer une commande avec rien ?!! --\'',
+        'out_of_stock' : 'Un ou plusieurs produits de votre commande sont en rupture de stock.',
+        'invalid' : 'Commande invalide.'
     })
 </script>
 </body>
