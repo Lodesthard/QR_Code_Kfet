@@ -37,10 +37,9 @@
             $stmt->close();
 
             // Add the image
-            saveFile('/var/www/html/res/images/baristas/', $_FILES['photo'], $username);
+            $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/res/images/baristas/';
+            saveFile($uploadPath, $_FILES['photo'], $username);
             $extansion = getFileExtansion($_FILES['photo']['name']);
-
-            var_dump($_POST['class']);
 
             $imgName =  $username . '.' . $extansion;
             $query = 'INSERT INTO baristas (user_id, class, photo) VALUES (?, ?, ?)';

@@ -22,17 +22,21 @@
     }
     
     if(isset($_POST['name'], $_POST['price'], $_POST['bdlc_price'], $_POST['category'], $_FILES['image'])) {
-        
+
         // Add the image
         $extansion = getFileExtansion($_FILES['image']['name']);
-        saveFile('/var/www/html/res/images/products/', $_FILES['image'], $_POST['name'] . '.' . $extansion);
+        $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/res/images/products/';
+        saveFile($uploadPath, $_FILES['image'], $_POST['name'] . '.' . $extansion);
+
+        $stock = isset($_POST['stock']) ? intval($_POST['stock']) : 0;
 
         if(!insert($mysqli, 'products', array(
-            array('key' => 'name', 'value' => $_POST['name']), 
-            array('key' => 'price', 'value' => $_POST['price']), 
-            array('key' => 'bdlc_price', 'value' => $_POST['bdlc_price']), 
-            array('key' => 'category', 'value' => $_POST['category']), 
-            array('key' => 'image', 'value' => $_POST['name'] . '.' . $extansion)
+            array('key' => 'name', 'value' => $_POST['name']),
+            array('key' => 'price', 'value' => $_POST['price']),
+            array('key' => 'bdlc_price', 'value' => $_POST['bdlc_price']),
+            array('key' => 'category', 'value' => $_POST['category']),
+            array('key' => 'image', 'value' => $_POST['name'] . '.' . $extansion),
+            array('key' => 'stock', 'value' => $stock)
         ))) {
             $databaseError = true;
             $errorMessage = 'Unable to insert the product';

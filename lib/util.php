@@ -97,20 +97,27 @@ function select($mysqli, $table, $values, $id) {
 function insert($mysqli, $table, $values) {
 
     $req = 'INSERT INTO ' . $table . ' (';
+    $params = [];
 
     for($i = 0; $i < count($values); $i++) {
         if($i != 0) $req .= ', ';
         $req .= $values[$i]['key'];
+        $params[] = $values[$i]['value'];
     }
 
     $req .= ') VALUES (';
     for($i = 0; $i < count($values); $i++) {
-        if($i != 0) $req .= ' ,';
-        $req .= '\'' . $values[$i]['value'] . '\'';
+        if($i != 0) $req .= ', ';
+        $req .= '?';
     }
     $req .= ')';
 
-    return $mysqli->query($req);
+    if($stmt = $mysqli->prepare($req)) {
+        $stmt = dynamicBindVariables($stmt, $params);
+        return $stmt->execute();
+    }
+
+    return false;
 }
 
 function getRandomString($length = 6) {

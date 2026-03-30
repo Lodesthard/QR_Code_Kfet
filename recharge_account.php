@@ -53,7 +53,7 @@
 
             <div class="form-group">
                 <label for="amount">Montant</label>
-                <input type="number" name="amount" id="amount" class="form-control" required placeholder="5€">
+                <input type="number" name="amount" id="amount" class="form-control" required placeholder="5€" step="0.01" min="0.01">
             </div>
 
            <div class="text-center">

@@ -43,9 +43,8 @@
 
 
 
-        $req = 'INSERT INTO users (student_number, password, username, bdlc_member, auth_level, credit, activated) 
+        $req = 'INSERT INTO users (student_number, password, username, bdlc_member, auth_level, credit, activated)
                 VALUES (?, \''. getRandomString(10) .'\', ?, ?, ?, ?, 0)';
-        var_dump($req);
 
         if($stmt = $mysqli->prepare($req)) {
             $stmt->bind_param('issid', $_POST['student_number'], $_POST['username'], $isMember, $_POST['auth_level'], $_POST['credit']);
@@ -68,7 +67,8 @@
                 }
 
                 // Move the bdlc icon to the barista folder
-                copy('/var/www/html/res/icon.svg', '/var/www/html/res/images/baristas/' . $photoName);
+                $docRoot = $_SERVER['DOCUMENT_ROOT'];
+                copy($docRoot . '/res/icon.svg', $docRoot . '/res/images/baristas/' . $photoName);
             }
         } else {
             header('Location: ../../administrate_users.php?add_status=error');

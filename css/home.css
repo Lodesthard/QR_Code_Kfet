@@ -370,3 +370,46 @@
 .return-button p:hover{
     text-decoration: underline;
 }
+
+/* Out of stock styles */
+.presentation-card.out-of-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.presentation-card .stock-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 11px;
+    z-index: 10;
+}
+
+.stock-cell .d-flex {
+    gap: 2px;
+}
+
+/* Bouton flottant scan QR */
+.scan-btn {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    margin: 0 0 20px 20px;
+    z-index: 1500;
+}
+
+.scan-btn .icon {
+    color: white;
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+    font-size: 2em;
+    padding: 5px 10px;
+    background-color: var(--color-primary);
+    background-image: linear-gradient(315deg, var(--color-primary) 0%, var(--color-secondary) 74%);
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

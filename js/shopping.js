@@ -130,6 +130,7 @@ function updateCartItemCounter() {
 }
 
 function submitForm() {
+	// Le panier sera vidé après l'affichage du récapitulatif (status_message.js)
 	$('#order-summary-form').submit();
 }
 

@@ -1,0 +1,94 @@
+.scan-wrapper {
+    max-width: 520px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+#reader-container {
+    border: 3px solid #eb5757;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+#reader {
+    width: 100%;
+}
+
+.manual-input {
+    max-width: 360px;
+    margin: 0 auto;
+}
+
+/* Carte commande */
+.order-card {
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.order-card-header {
+    background: #f8f9fa;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.order-card-header h4 {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.order-items {
+    padding: 0.75rem 1.2rem;
+}
+
+.order-item-row {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1.05rem;
+}
+
+.order-item-row:last-child {
+    border-bottom: none;
+}
+
+.item-qty {
+    font-size: 1rem;
+    min-width: 2.5rem;
+    margin-right: 0.75rem;
+}
+
+.item-name {
+    flex: 1;
+}
+
+.item-price {
+    font-weight: 600;
+    color: #333;
+}
+
+.order-card-footer {
+    background: #f8f9fa;
+    padding: 1rem 1.2rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+}
+
+.total-line strong {
+    font-size: 1.2rem;
+    color: #eb5757;
+}
+
+/* Erreur */
+.error-icon {
+    font-size: 3rem;
+    color: #dc3545;
+}
